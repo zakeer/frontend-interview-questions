@@ -1,0 +1,31 @@
+# HTML and CSS
+
+### HTML Layout and Structure
+1. **Semantic HTML**: What is semantic HTML and why is it important? Can you provide examples of semantic HTML5 tags?
+2. **Page Structure**: How would you structure a basic webpage layout using HTML? Describe the purpose of elements like `<header>`, `<footer>`, `<article>`, and `<section>`.
+
+### CSS Layout Techniques
+3. **Box Model**: Explain the CSS box model. How do the `padding`, `border`, and `margin` properties affect an element?
+4. **Positioning Elements**: Can you describe the difference between `position: relative`, `absolute`, `fixed`, and `sticky` in CSS?
+5. **Flexbox**: How does flexbox work? Provide an example scenario where you would use it.
+6. **CSS Grid**: Explain the CSS Grid layout. How does it differ from flexbox and when would you choose one over the other?
+
+### Responsive Design
+7. **Media Queries**: How do you use media queries for responsive design? Can you write an example of a media query that changes layout for a mobile device?
+8. **Mobile-First Approach**: What is a mobile-first design approach? Why might it be beneficial?
+
+### Styling Techniques
+9. **Styling Best Practices**: What are some best practices for writing efficient and maintainable CSS?
+10. **Preprocessors**: Have you used any CSS preprocessors (like SASS or LESS)? What advantages do they offer?
+
+### Advanced and Modern CSS
+11. **Animations and Transitions**: How do you create animations and transitions in CSS? Provide an example.
+12. **CSS Variables**: What are CSS custom properties (variables) and how would you use them?
+
+### Practical Scenarios and Problem Solving
+13. **Layout Challenges**: Describe a challenging layout you had to implement. How did you approach it and what technologies did you use?
+14. **Cross-Browser Compatibility**: How do you ensure your layouts look consistent across different browsers and devices?
+
+### Accessibility and Standards
+15. **Web Accessibility**: How does HTML and CSS play a role in making a website accessible?
+16. **Standards Compliance**: Why is it important to follow web standards, and how do you ensure your markup and style sheets comply?
