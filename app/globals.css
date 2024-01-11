@@ -11,6 +11,12 @@ body {
   padding: 3rem;
 }
 
+@media screen and (max-width: 640px) {
+  .ui-markdown {
+    padding: 1rem 3rem;
+  }
+}
+
 .ui-markdown h1 {
   font-size: 3rem;
   font-weight: bold;
@@ -62,5 +68,6 @@ body {
 .ui-answer pre code {
   background: none;
   color: #000;
+  font-size: small;
 
 }
