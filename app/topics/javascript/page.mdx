@@ -3,16 +3,285 @@
 ### 1. JavaScript Basics
 
 - **Data Types**: What are the different data types in JavaScript? Can you explain the difference between `null` and `undefined`?
+<div className="ui-answer">
+
+JavaScript, being a loosely typed language, has several data types. These are broadly categorized into primitive types and object types.
+
+**Primitive Data Types:**
+1. **Number:** Represents both integer and floating-point numbers.
+2. **String:** Represents textual data, enclosed in single, double, or backticks.
+3. **Boolean:** Represents a logical entity and can have only two values: `true` or `false`.
+4. **Undefined:** Indicates that a variable has been declared but has not been assigned a value.
+5. **Null:** Represents the intentional absence of any object value. It's often used to signify 'nothing', 'empty' or 'value unknown'.
+6. **Symbol (ES6):** Represents a unique identifier, created by calling the `Symbol()` function.
+7. **BigInt (ES2020):** An extension of the Number type that can represent integers with arbitrary precision.
+
+**Object Types:**
+- **Object:** Represents instances of user-defined classes, arrays, and functions.
+
+**Difference Between Null and Undefined:**
+- **Undefined** is used by JavaScript to indicate that a variable has been declared but not initialized with a value. It's a default state for variables that have been created but not yet explicitly assigned a value.
+- **Null**, on the other hand, is an assignment value that represents a deliberate non-value. It's used by programmers to indicate 'no value' or 'empty' intentionally.
+
+Essentially, `undefined` is a type that JavaScript uses to say “no value here”, whereas `null` is a value that programmers set to say “you may expect a value here, but it's not here right now”. In JavaScript, `undefined` and `null` are both falsy, but they are not the same - `undefined` is a type unto itself, while `null` is an object. This distinction can be observed when using the `typeof` operator: `typeof undefined` returns `"undefined"`, while `typeof null` returns `"object"`.
+</div>
+
 - **Type Coercion**: How does type coercion work in JavaScript? Give an example of an unexpected result due to type coercion.
+<div className="ui-answer">
+
+Type coercion in JavaScript is the automatic or implicit conversion of values from one data type to another (such as strings to numbers). JavaScript is a weakly typed or dynamic language, meaning it does not require explicit declaration of the data types of variables. As a result, it often automatically converts values to the necessary type for a certain operation.
+
+**How Type Coercion Works:**
+- **Implicit Conversion:** This happens when an operator or statement expects a specific data type but is given another. For example, when using the `==` operator (loose equality), JavaScript converts the types to match each other.
+- **String Concatenation:** If one of the operands is a string, the other operand is converted to a string as well.
+- **Numeric Conversion:** In mathematical operations, non-numbers are often converted to numbers. 
+- **Boolean Contexts:** In logical operations, non-boolean values are converted to boolean (truthy or falsy values).
+
+**Example of Unexpected Result:**
+One common surprise in JavaScript’s type coercion comes with the loose equality operator (`==`). For instance:
+
+```javascript
+const value1 = "5";
+const value2 = 5;
+
+console.log(value1 == value2); // true
+```
+
+Here, `value1` is a string and `value2` is a number. Despite this difference in type, the `==` operator converts both to a common type (in this case, to a number) before comparing them, leading to a `true` result. This is often not what a programmer expects, especially if they come from a language with strong typing.
+
+To avoid such unexpected results, it’s generally recommended to use the strict equality operator (`===`), which does not perform type coercion. In the above example, `value1 === value2` would result in `false`.
+</div>
 
 ### 2. Functions and Scope
 
 - **Function Types**: What is the difference between a function declaration and a function expression?
+<div className="ui-answer">
+
+In JavaScript, functions can be defined in several different ways, each with its own nuances. The two primary ways are function declarations and function expressions, and there's also a more recent addition called arrow functions.
+
+**Function Declaration:**
+- **Syntax:** A function declaration starts with the `function` keyword, followed by the function name, parameters in parentheses `()`, and the function body enclosed in curly braces `{}`.
+- **Hoisting:** Function declarations are hoisted, which means they are available in their entire enclosing scope, regardless of where they are declared. You can call these functions before they are defined in the code.
+- **Example:**
+    ```javascript
+    function greet(name) {
+        return `Hello, ${name}!`;
+    }
+    ```
+
+**Function Expression:**
+- **Syntax:** A function expression is when a function is assigned to a variable. The function can be named, or anonymous (without a function name).
+- **Hoisting:** Unlike function declarations, function expressions are not hoisted, so they cannot be called before they are defined in the script.
+- **Example:**
+    ```javascript
+    const greet = function(name) {
+        return `Hello, ${name}!`;
+    };
+    ```
+
+**Arrow Function:**
+- **Introduced in ES6 (ECMAScript 2015):** Arrow functions provide a concise syntax for writing function expressions. They do not have their own `this`, do not have a `prototype`, cannot be used as constructors, and cannot use `arguments` object.
+- **Syntax:** Arrow functions are defined using the arrow notation (`=>`). If the function body contains just a single statement, you can omit the curly braces and the return is implicit.
+- **Example:**
+    ```javascript
+    const greet = (name) => `Hello, ${name}!`;
+    ```
+
+**When to Use Each:**
+- **Function Declarations:** Ideal for more traditional function structures, especially if you need to leverage hoisting.
+- **Function Expressions:** Useful when you want to limit the scope of the function, typically within another function or to use as a callback.
+- **Arrow Functions:** Great for short, concise functions that do not need their own `this` context, often used in functional programming patterns, like with array methods or as callbacks.
+
+Understanding these differences can help you choose the right type of function for a particular use case in JavaScript development.
+</div>
+
 - **Scope and Hoisting**: Can you explain the concept of scope and hoisting in JavaScript? How do they affect variable declarations?
+<div className="ui-answer">
+
+Scope and hoisting are fundamental concepts in JavaScript that significantly influence how variables and functions are declared, accessed, and managed.
+
+**Scope:**
+- **Definition:** Scope in JavaScript determines the accessibility of variables and functions at various parts of your code.
+- **Types:**
+  - **Global Scope:** Variables declared globally (outside of any function) have global scope, meaning they can be accessed and modified anywhere in your code.
+  - **Local (or Function) Scope:** Variables declared within a function have local scope and are only accessible within that function.
+  - **Block Scope (ES6):** With the introduction of `let` and `const` in ES6, JavaScript got block scoping. Variables declared inside a block `{}` using `let` or `const` are only accessible within that block.
+
+**Hoisting:**
+- **Definition:** Hoisting is JavaScript's default behavior of moving declarations to the top of the current scope (script or function).
+- **Variable Hoisting:** 
+  - **`var` Declarations:** When you declare a variable using `var`, it is hoisted and initialized with `undefined`. This means you can use the variable before its declaration.
+  - **`let` and `const` Declarations:** These declarations are also hoisted but are not initialized, leading to a ReferenceError if you try to access them before their actual declaration.
+- **Function Hoisting:**
+  - **Function Declarations:** Are hoisted, meaning you can call them before they are defined.
+  - **Function Expressions:** If a function is defined as an expression (assigned to a variable), hoisting depends on the variable declaration. If it's a `var`, the variable is hoisted but not the function assignment.
+
+**Examples:**
+- **Variable Hoisting:**
+  ```javascript
+  console.log(x); // undefined, due to hoisting
+  var x = 5;
+  ```
+
+- **Function Hoisting:**
+  ```javascript
+  hello(); // This works due to hoisting
+  function hello() {
+      console.log("Hello!");
+  }
+  ```
+
+- **`let`/`const` and Block Scope:**
+  ```javascript
+  if (true) {
+      let y = 10;
+      const z = 20;
+  }
+  console.log(y, z); // ReferenceError: y and z are not defined
+  ```
+
+**Impact on Variable Declarations:**
+- Hoisting can lead to unexpected behaviors, particularly when using `var`, as it allows you to use variables before they are declared.
+- Understanding scope is crucial for managing the accessibility and lifetime of variables and functions, helping to prevent issues like unintentional global variables or conflicts between variables.
+
+By understanding scope and hoisting, developers can write more predictable and error-free JavaScript code.
+</div>
 
 ### 3. ES6 and Modern JavaScript
 
 - **ES6 Features**: What are some of the new features introduced in ES6 (ES2015)? How have they changed the way you write JavaScript?
+<div className="ui-answer">
+
+ES6, also known as ECMAScript 2015, introduced many new features that modernized JavaScript, making code more concise, readable, and maintainable. Here are some of the key features with examples:
+
+1. **Let and Const for Variable Declarations:**
+   - **Before ES6:** Variables were declared using `var`, which is function-scoped.
+     ```javascript
+     var name = "John";
+     ```
+   - **ES6:** Introduced block-scoped `let` and `const`.
+     ```javascript
+     let age = 25;  // Can be reassigned
+     const birthYear = 1995;  // Cannot be reassigned
+     ```
+
+2. **Arrow Functions:**
+   - **Before ES6:** Functions were declared using the `function` keyword.
+     ```javascript
+     function add(a, b) {
+         return a + b;
+     }
+     ```
+   - **ES6:** Concise syntax with arrow functions.
+     ```javascript
+     const add = (a, b) => a + b;
+     ```
+
+3. **Template Literals:**
+   - **Before ES6:** String concatenation with `+`.
+     ```javascript
+     var greeting = "Hello, " + name + "!";
+     ```
+   - **ES6:** Template literals for interpolation.
+     ```javascript
+     const greeting = `Hello, ${name}!`;
+     ```
+
+4. **Default Parameters:**
+   - **Before ES6:** Default parameters were set manually.
+     ```javascript
+     function greet(name) {
+         name = name || 'Guest';
+         return 'Hello ' + name;
+     }
+     ```
+   - **ES6:** Default parameters in function signature.
+     ```javascript
+     function greet(name = 'Guest') {
+         return `Hello ${name}`;
+     }
+     ```
+
+5. **Destructuring Assignment:**
+   - **Before ES6:** Manually extracting properties.
+     ```javascript
+     var user = { name: 'John', age: 30 };
+     var userName = user.name;
+     var userAge = user.age;
+     ```
+   - **ES6:** Destructuring syntax.
+     ```javascript
+     const user = { name: 'John', age: 30 };
+     const { name, age } = user;
+     ```
+
+6. **Enhanced Object Literals:**
+   - **ES6:** Property value shorthand and method definition shorthand.
+     ```javascript
+     const person = {
+         name,  // Same as name: name
+         age,   // Same as age: age
+         greet() {  // Same as greet: function() {}
+             return `Hello, ${this.name}`;
+         }
+     };
+     ```
+
+7. **Spread Operator and Rest Parameters:**
+   - **Spread Operator:** Used to expand elements.
+     ```javascript
+     const numbers = [1, 2, 3];
+     const newNumbers = [...numbers, 4, 5];  // [1, 2, 3, 4, 5]
+     ```
+   - **Rest Parameters:** Represent indefinite number of arguments as an array.
+     ```javascript
+     function sum(...nums) {
+         return nums.reduce((a, b) => a + b, 0);
+     }
+     ```
+
+8. **Promises and Asynchronous Programming:**
+   - **ES6:** Promises for handling asynchronous operations.
+     ```javascript
+     const fetchData = () => {
+         return new Promise((resolve, reject) => {
+             setTimeout(() => resolve("Data fetched"), 2000);
+         });
+     };
+     fetchData().then(data => console.log(data));
+     ```
+
+9. **Modules (Import and Export):**
+   - **ES6:** Modular code with `export` and `import`.
+     ```javascript
+     // In math.js
+     export const add = (a, b) => a + b;
+
+     // In app.js
+     import { add } from './math.js';
+     console.log(add(2, 3));  // 5
+     ```
+
+10. **Classes:**
+    - **ES6:** Syntax for classes and inheritance.
+      ```javascript
+      class Person {
+          constructor(name) {
+              this.name = name;
+          }
+
+          greet() {
+              return `Hello, ${this.name}`;
+          }
+      }
+
+      const john = new Person('John');
+      john.greet();  // "Hello, John"
+      ```
+
+These features have made JavaScript development more efficient and aligned with modern programming practices. They have improved the readability and maintainability of the code, encouraged the use of immutable data patterns (`const`), enabled more functional programming patterns (arrow functions, rest/spread operators), and facilitated better structuring and organization of code (modules, classes).
+</div>
+
 - **Arrow Functions**: What are arrow functions, and how do they differ from traditional functions, especially in terms of `this` context?
 
 ### 4. Asynchronous JavaScript

@@ -18,12 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgba(50, 50, 255, 0.2);
 }
 
 .ui-markdown {
@@ -42,4 +37,44 @@ body {
   font-size: 1.5rem;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   padding-top: 1.5rem;
+}
+
+.ui-answer {
+  padding: 16px;
+  background:rgba(100, 100, 255, 0.2);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 8px;
+}
+
+.ui-answer ol,
+.ui-answer ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ui-answer code,
+.ui-answer pre {
+  background: rgba(100, 100, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.ui-answer pre {
+  overflow: auto;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin-bottom: 16px;
+}
+
+.ui-answer pre code {
+  background: none;
+  color: #000;
+
 }
