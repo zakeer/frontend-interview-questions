@@ -397,6 +397,8 @@ The JavaScript Event Loop is a fundamental concept in the language, particularly
 
 **Key Difference:** Microtasks have a higher priority than macrotasks. After each macrotask, the JavaScript engine checks if there are any microtasks in the queue and executes them before starting the next macrotask. This can lead to situations where continuous microtasks prevent macrotasks from running, potentially leading to issues like UI freezing.
 
+<img src="https://assets-global.website-files.com/62c6fbddb12bb54622241c3d/62c6fbddb12bb523df242285_event_loop_animation-gif.gif" style={{maxWidth: "100%"}}/>
+
 **Examples:**
 
 1. **Simple Event Loop Example:**
