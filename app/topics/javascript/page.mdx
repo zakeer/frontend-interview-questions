@@ -283,11 +283,158 @@ These features have made JavaScript development more efficient and aligned with 
 </div>
 
 - **Arrow Functions**: What are arrow functions, and how do they differ from traditional functions, especially in terms of `this` context?
+<div className="ui-answer">
+
+Arrow functions, introduced in ES6 (ECMAScript 2015), are a more concise way of writing functions in JavaScript. They differ from traditional function expressions in several key ways:
+
+1. **Syntax:**
+   - **Traditional Function:**
+     ```javascript
+     function add(a, b) {
+         return a + b;
+     }
+     ```
+   - **Arrow Function:**
+     ```javascript
+     const add = (a, b) => a + b;
+     ```
+
+   Arrow functions allow for shorter syntax. They don't need the `function` keyword, and if the function has a single expression, curly braces and the `return` keyword can be omitted.
+
+2. **'this' Context:**
+   - **Traditional Function:** The value of `this` is determined by how the function is called. It can vary and is often a common source of errors in JavaScript.
+   - **Arrow Function:** Arrow functions don't have their own `this` context. Instead, they inherit `this` from the parent scope at the time of definition. This is particularly useful for callbacks and methods that need to preserve the context of `this` from their enclosing scope.
+
+3. **Arguments Object:**
+   - **Traditional Function:** Has access to an `arguments` object, which is an array-like object containing the parameters passed to the function.
+   - **Arrow Function:** Does not have its own `arguments` object. To access the function arguments, rest parameters (`...args`) can be used.
+
+4. **Constructor Use:**
+   - **Traditional Function:** Can be used as a constructor with the `new` keyword.
+   - **Arrow Function:** Cannot be used as a constructor. If you try to instantiate an arrow function with the `new` keyword, it will throw an error.
+
+5. **Method Definitions:**
+   - **Traditional Function:** Suitable for defining methods that will use the object’s `this` context.
+   - **Arrow Function:** Not ideal for defining object methods if you need to access the object's properties using `this`.
+
+6. **No Duplicate Named Parameters:**
+   - **Traditional Function:** Allows duplicate named parameters in non-strict mode.
+   - **Arrow Function:** Does not allow duplicate named parameters in any mode.
+
+Because of these differences, arrow functions are ideal for situations where you need to maintain the `this` context (like in event handlers or methods used in callback-based code), but they are not suitable for all situations, particularly where you need a dynamic `this` context or want to use function-specific features like constructors and the `arguments` object.
+</div>
+
 
 ### 4. Asynchronous JavaScript
 
 - **Promises and Async/Await**: How do promises work in JavaScript? Can you compare promises with async/await?
+<div className="ui-answer">
+
+Promises and async/await are two fundamental concepts in JavaScript for handling asynchronous operations, each with its own syntax and use cases.
+
+**Promises:**
+1. **Basics:** A Promise in JavaScript is an object representing the eventual completion or failure of an asynchronous operation. It's a proxy for a value not necessarily known when the promise is created.
+2. **States:** A promise is in one of these states:
+   - **Pending:** Initial state, neither fulfilled nor rejected.
+   - **Fulfilled:** The operation completed successfully.
+   - **Rejected:** The operation failed.
+3. **Usage:** A new Promise is created with a function that takes two arguments, `resolve` and `reject`. Functions attached to the promise (using `.then`, `.catch`, `.finally`) will be called upon fulfillment or rejection.
+4. **Example:**
+   ```javascript
+   let promise = new Promise((resolve, reject) => {
+     setTimeout(() => resolve("Result"), 1000);
+   });
+
+   promise
+     .then(result => console.log(result))  // "Result" after 1 second
+     .catch(error => console.log(error))
+     .finally(() => console.log("Completed"));
+   ```
+
+**Async/Await:**
+1. **Basics:** `async` and `await` are syntactic sugar built on top of Promises. They provide a way to write asynchronous code that looks synchronous.
+2. **Async Function:** An `async` function is a function that implicitly returns a promise and can contain `await` expressions.
+3. **Await:** The `await` keyword is used inside `async` functions to pause the execution until the Promise is resolved or rejected.
+4. **Exception Handling:** Errors in `async` functions can be caught using try-catch blocks.
+5. **Example:**
+   ```javascript
+   async function fetchData() {
+     try {
+       let response = await fetch('https://api.example.com/data');
+       let data = await response.json();
+       console.log(data);
+     } catch (error) {
+       console.error('Error:', error);
+     }
+   }
+
+   fetchData();
+   ```
+
+**Comparison:**
+- **Syntax:** Promises can lead to deeply nested `.then` and `.catch` chains, known as "callback hell" or the "pyramid of doom," whereas async/await provides a cleaner, more readable structure that resembles synchronous code.
+- **Error Handling:** In promises, errors are handled with `.catch`, while in async/await, traditional try-catch blocks are used.
+- **Debugging:** Async/await makes debugging easier since it's more straightforward to trace through the code due to its synchronous appearance.
+- **Parallelism:** With promises, you can easily run multiple asynchronous operations in parallel (using `Promise.all`). While this is also possible with async/await, it requires additional consideration (e.g., storing each `await` expression in a separate variable before awaiting them together).
+
+Both promises and async/await are powerful for handling asynchronous operations, but async/await is generally preferred for its readability and similarity to synchronous code, especially in more complex scenarios.
+</div>
+
+
 - **Event Loop**: Can you explain how the JavaScript event loop works? What is the difference between microtasks and macrotasks?
+<div className="ui-answer">
+
+The JavaScript Event Loop is a fundamental concept in the language, particularly for understanding how asynchronous code is executed. JavaScript is single-threaded, but the event loop allows it to perform non-blocking operations, such as handling I/O or timers.
+
+**How the Event Loop Works:**
+1. **Call Stack:** This is where JavaScript executes function calls. When a function is called, it's added (pushed) to the stack. When the function returns, it's removed (popped) from the stack.
+2. **Callback Queue:** When asynchronous operations (like setTimeout, HTTP requests) finish, their callback functions are pushed to the callback queue.
+3. **Event Loop:** Its primary role is to check if the call stack is empty. If the call stack is empty, it takes the first event from the callback queue and pushes it to the call stack, which then runs it.
+
+**Microtasks and Macrotasks:**
+- **Macrotasks:** These are tasks that can be executed independently and include things like `setTimeout`, `setInterval`, `setImmediate`, I/O, UI rendering.
+- **Microtasks:** These are tasks that are usually the result of asynchronous operations, and their execution doesn't require the JavaScript thread to be free. Examples include `Promise` callbacks and `MutationObserver`.
+
+**Key Difference:** Microtasks have a higher priority than macrotasks. After each macrotask, the JavaScript engine checks if there are any microtasks in the queue and executes them before starting the next macrotask. This can lead to situations where continuous microtasks prevent macrotasks from running, potentially leading to issues like UI freezing.
+
+**Examples:**
+
+1. **Simple Event Loop Example:**
+   ```javascript
+   console.log('Start');
+
+   setTimeout(() => {
+       console.log('Timeout 1');  // Macrotask
+   }, 0);
+
+   Promise.resolve()
+       .then(() => console.log('Promise 1'))  // Microtask
+       .then(() => console.log('Promise 2')); // Microtask
+
+   console.log('End');
+   ```
+   - **Order of Execution:** 'Start' -> 'End' -> 'Promise 1' -> 'Promise 2' -> 'Timeout 1'.
+
+2. **Mixing Microtasks and Macrotasks:**
+   ```javascript
+   setTimeout(() => console.log('Timeout'), 0);  // Macrotask
+
+   Promise.resolve()
+       .then(() => console.log('Promise 1'))  // Microtask
+       .then(() => {
+           for (let i = 0; i < 1000000000; i++) {}  // Long loop
+           console.log('Promise 2')  // Microtask
+       });
+
+   console.log('End');
+   ```
+   - **Order of Execution:** 'End' -> 'Promise 1' -> Long loop -> 'Promise 2' -> 'Timeout'.
+
+   Here, the long loop in the second `.then()` of the Promise delays the execution of the macrotask (`setTimeout`).
+
+Understanding the event loop, along with the distinction between microtasks and macrotasks, is crucial for writing efficient, non-blocking JavaScript code. It helps in predicting the behavior of asynchronous operations and optimizing the performance of JavaScript applications.
+</div>
+
 
 ### 5. Objects and Prototypes
 
